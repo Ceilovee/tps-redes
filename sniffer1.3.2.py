@@ -1,3 +1,4 @@
+
 #porcentaje de protocolos
 from scapy.all import *
 import datetime
@@ -97,5 +98,5 @@ def callback(pkt):
         S1[s_i] += 1.0
 
 #Sniffeo paquetes y los proceso con callback()
-sniff(prn=callback, count=300)
+sniff(prn=callback, count=10000)
 mostrar_fuente(S1)
