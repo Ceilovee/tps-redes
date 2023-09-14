@@ -39,7 +39,7 @@ def mostrar_fuente(S, printOutput=True, printExtraInformation=True, calculateInf
                 output_line += f" : count={int(symbol_count)}"
             
             output_lines.append(output_line)
-            output_lines.append("-------------------------------------------")
+        output_lines.append("-------------------------------------------")
 
         if calculateInformation:
             output_lines.append(f"Entropia: {entropy}")
