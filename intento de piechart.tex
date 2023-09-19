@@ -1,0 +1,54 @@
+\pgfplotstableread[row sep=\\,col sep=&]{
+    interval      & u2048 & u2054 & u34525 & b2048 & b2054 \\
+    One Piece     & 0.04  & 8.56  & 6.66   & 8.38  & 6.80  \\
+    Fiesta        & 0.38  & 3.64  & 3.56   & 9.35  & 3.92  \\
+    Centro Médico & 0.29  & 8.26  & 3.53   & 6.61  & 3.66  \\
+    Facultad      & 0.10  & 10.70 & 7.05   & 4.14  & 0.00  \\
+    }\mydata
+
+
+\begin{tikzpicture}
+
+% One Piece
+    [pos = {0,0}]
+{
+    0.04/Unicast 2048,
+    8.56/Unicast 2054,
+    6.66/Unicast 34525,
+    8.38/Broadcast 2048,
+    6.80/Broadcast 2054
+}
+
+% Fiesta
+    [pos = {8,0}]
+{
+    0.38/Unicast 2048,
+    3.64/Unicast 2054,
+    3.56/Unicast 34525,
+    9.35/Broadcast 2048,
+    3.92/Broadcast 2054
+}
+
+% Centro médico
+{
+    0.29/Unicast 2048,
+    8.26/Unicast 2054,
+    3.53/Unicast 34525,
+    6.61/Broadcast 2048,
+    3.66/Broadcast 2054
+}
+
+
+% Facultad
+\pie[
+    text = legend
+    ]
+{
+    0.10/Unicast 2048,
+    10.70/Unicast 2054,
+    7.05/Unicast 34525,
+    4.14/Broadcast 2048,
+    0.00/Broadcast 2054
+}
+
+\end{tikzpicture}
