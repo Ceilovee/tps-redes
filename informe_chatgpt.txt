@@ -1,0 +1,32 @@
+Para resolver el ejercicio de extender el informe con una propuesta de modelo de fuente de información de memoria nula S2 basado en las direcciones IP dentro de los paquetes ARP, y responder a las preguntas planteadas, puedes seguir los siguientes pasos:
+
+Paso 1: Comprende el contexto y los objetivos
+Antes de comenzar, es importante comprender el contexto del ejercicio y sus objetivos. Parece que estás trabajando en el análisis de una red a través de paquetes ARP y deseas crear un modelo de fuente de información para distinguir los hosts en esa red.
+
+Paso 2: Propuesta de modelo de fuente de información S2
+Para crear un modelo de fuente de información de memoria nula S2, debes decidir cómo representar los datos y calcular la información de cada símbolo. En este caso, los símbolos serán las direcciones IP dentro de los paquetes ARP. Aquí hay un enfoque sugerido:
+
+    Recopilación de datos: Recopila una muestra representativa de paquetes ARP de la red en cuestión.
+
+    Identificación de direcciones IP únicas: Analiza los paquetes ARP para identificar todas las direcciones IP únicas presentes en la muestra. Cada dirección IP única será un símbolo en tu fuente de información.
+
+    Cálculo de probabilidades: Calcula la probabilidad de ocurrencia de cada dirección IP única en la muestra. Esto se puede hacer dividiendo el número de veces que aparece una dirección IP entre el número total de paquetes ARP en la muestra.
+
+    Cálculo de la información de cada símbolo: Utiliza la fórmula de la teoría de la información para calcular la información de cada símbolo. La fórmula es: I(x) = -log2(P(x)), donde P(x) es la probabilidad de ocurrencia del símbolo x.
+
+    Entropía de la fuente: Calcula la entropía de la fuente utilizando la fórmula de la entropía: H(S) = Σ [P(x) * I(x)]. Esto te dará una medida de cuán "caótica" o impredecible es la fuente de información. Si la entropía es máxima, sugiere que hay una gran diversidad de direcciones IP en la red.
+
+Paso 3: Respuesta a las preguntas
+Ahora, puedes utilizar el modelo de fuente de información para responder a las preguntas planteadas:
+
+    ¿La entropía de la fuente es máxima? ¿Qué sugiere esto acerca de la red?: Si la entropía es máxima, sugiere que la red tiene una amplia variedad de direcciones IP y que no hay un patrón claro en las asignaciones de IP. Esto podría ser indicativo de una red diversa o compleja.
+
+    ¿Se pueden distinguir nodos? ¿Se les puede adjudicar alguna función específica?: Sí, puedes distinguir nodos basándote en la información proporcionada por el modelo. Los nodos con direcciones IP que tienen una información alta son más distintivos y podrían ser nodos de interés o importancia en la red.
+
+    ¿Hay evidencia parcial que sugiera que algún nodo funciona de forma anómala y/o no esperada?: Los nodos cuyas direcciones IP tienen información significativamente diferente a la media podrían ser candidatos para un análisis más detallado, ya que podrían indicar comportamientos anómalos o inesperados.
+
+    ¿Existe una correspondencia entre lo que se conoce de la red y los nodos distinguidos detectados por la herramienta?: Deberías comparar los nodos distinguidos con la información previamente conocida sobre la red. Si hay una correspondencia, esto podría validar la eficacia de tu modelo.
+
+    ¿Ha encontrado paquetes ARP no esperados? ¿Se puede determinar para qué sirven?: Puedes buscar direcciones IP o patrones de paquetes ARP que no se ajusten a lo esperado en la red. Esto podría indicar actividad inusual o no autorizada que requiere una investigación adicional.
+
+En resumen, la creación de un modelo de fuente de información basado en las direcciones IP de paquetes ARP te permitirá analizar la red, identificar nodos distintivos y potencialmente descubrir comportamientos anómalos en la misma. La teoría de la información proporciona un marco sólido para realizar este análisis.
