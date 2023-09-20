@@ -75,7 +75,7 @@ def mostrar_fuente_S2(S):
 
 # Luego de procesar los paquetes ARP, llamamos a la función mostrar_fuente_S2
 paqutesARP = 0
-with PcapReader("./centro_medico.pcap") as pcap_reader:
+with PcapReader("./Resultados/centro_medico.pcapng") as pcap_reader:
     for pkt in pcap_reader:
         callback(pkt)
         if ARP in pkt: 

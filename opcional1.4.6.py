@@ -34,7 +34,7 @@ def callback(pkt):
 
         proto = pkt[Ether].type
 
-        if (proto == 2054): # ARP es el protocolo 2054
+        if (ARP in pkt): # ARP es el protocolo 2054
 
             # TODO: No estoy segura de cómo tiene que ser esta linea
             dire = pkt[Ether].dst

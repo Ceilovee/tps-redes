@@ -22,8 +22,9 @@ S2 = {}
 unicast_count = 0
 broadcast_count = 0
 
+
 # Funcion que calcula las probabilidades y las muestra dependiendo el parametro
-def mostrar_fuente(S):
+def mostrar_fuente(S, muestro_mas_info):
 
     # Calculo el numero de simbolos y los ordeno descending por cantidad
     N = sum(S.values())
@@ -53,23 +54,26 @@ def mostrar_fuente(S):
 
     output_lines.append(f"Entropia: {entropy}")
 
-    # Calculo el porcentaje de UNICAST/BROADCAST
-    unicast_percentage   = (unicast_count   / N)*100    
-    broadcast_percentage = (broadcast_count / N)*100
-    
-    output_lines.append("\n------------Porcentaje de Direcciones------------")
-    output_lines.append(f"UNICAST:   {  unicast_percentage}%")
-    output_lines.append(f"BROADCAST: {broadcast_percentage}%")
-    output_lines.append("-------------------------------------------------")
 
-    # Calculo porcentaje de protocolos
-    output_lines.append("\n------------Porcentaje de Protocolos------------")
+    if (muestro_mas_info):
 
-    for k, v in S.items():
-        pct = v * 100.0 / N
-        output_lines.append(f"{k[1]}: {pct}%")
-    
-    output_lines.append("------------------------------------------------")
+        # Calculo el porcentaje de UNICAST/BROADCAST
+        unicast_percentage   = (unicast_count   / N)*100    
+        broadcast_percentage = (broadcast_count / N)*100
+        
+        output_lines.append("\n------------Porcentaje de Direcciones------------")
+        output_lines.append(f"UNICAST:   {  unicast_percentage}%")
+        output_lines.append(f"BROADCAST: {broadcast_percentage}%")
+        output_lines.append("-------------------------------------------------")
+
+        # Calculo porcentaje de protocolos
+        output_lines.append("\n------------Porcentaje de Protocolos------------")
+
+        for k, v in S.items():
+            pct = v * 100.0 / N
+            output_lines.append(f"{k[1]}: {pct}%")
+        
+        output_lines.append("------------------------------------------------")
            
     # Calculo el runtime
     CURRENT_DATETIME = datetime.datetime.now()
@@ -89,6 +93,7 @@ def callback(pkt):
 
     # Armo S1
     if pkt.haslayer(Ether):
+
         # Clasifico BROADCAST o UNICAST y tomo el protocolo
         if pkt[Ether].dst == "ff:ff:ff:ff:ff:ff":
             dire = "BROADCAST"
@@ -99,7 +104,6 @@ def callback(pkt):
 
         proto = pkt[Ether].type
         
-        # Armo el simbolo para el diccionario
         s_i = (dire, proto)
         
         # Veo si ya existia, y con la cantidad de apariciones calculo la probabilidad
@@ -107,25 +111,20 @@ def callback(pkt):
             S1[s_i] = 0.0
         S1[s_i] += 1.0
 
+
     # Armo S2 
-    # TODO: Ya se que es redundante pero dps lo corrijo
-    if pkt.haslayer(Ether):
 
-        proto = pkt[Ether].type
-
-        if (proto == 2054): # ARP es el protocolo 2054
-
-            # TODO: No estoy segura de cómo tiene que ser esta linea
-            dire = pkt[Ether].src
-            #dire = pkt.src
-
-            # Armo el simbolo para el diccionario
-            s_i = (dire, proto)    
+    if (ARP in pkt):
         
-            # Veo si ya existia, y con la cantidad de apariciones calculo la probabilidad
-            if s_i not in S2:
-                S2[s_i] = 0.0
-            S2[s_i] += 1.0
+        dire = pkt[ARP].psrc
+        
+        # Armo el simbolo para el diccionario
+        s_i = (dire, "ARP")    
+        
+        # Veo si ya existia, y con la cantidad de apariciones calculo la probabilidad
+        if s_i not in S2:
+            S2[s_i] = 0.0
+        S2[s_i] += 1.0
 
 
 # En vez de sniffear paquetes, leemos el archivo de pcap/pcapng
@@ -136,6 +135,8 @@ if (file_dir != ""): #¿Recibimos dirección de entrada?
             callback(pkt)
             limiter += 1
     
-    mostrar_fuente(S1)
-    print("\n\n\n\n\n")
-    mostrar_fuente(S2)
+    print (\n\n\n"********************Fuente S1********************")
+    mostrar_fuente(S1, True)
+    print ("\n\n\n********************Fuente S2********************")
+    mostrar_fuente(S2, False)
+
