@@ -1,0 +1,15 @@
+\pgfplotstableread[row sep=\\,col sep=&]{
+    interval      & Unicast & Broadcast & Protocolo2048 & Protocolo2054 & Protocolo34525 & Entropia \\
+    One Piece     &  98.8   & 1.2       & 97.85         & 1.16          & 0.99           & 0.21     \\
+    Fiesta        &  93.25  & 6.75      & 76.87         & 14.63         & 8.50           & 1.16     \\
+    Centro Médico &  91.07  & 8.93      & 83.11         & 8.24          & 8.65           & 0.92     \\
+    Facultad      &  94.34  & 5.66      & 99.19         & 0.06          & 0.75           & 0.84     \\
+    }\mydata
+
+\pgfplotstableread[row sep=\\,col sep=&]{
+    interval      & u2048 & u2054 & u34525 & b2048 & b2054 \\
+    One Piece     & 0.04  & 8.56  & 6.66   & 8.38  & 6.80  \\
+    Fiesta        & 0.38  & 3.64  & 3.56   & 9.35  & 3.92  \\
+    Centro Médico & 0.29  & 8.26  & 3.53   & 6.61  & 3.66  \\
+    Facultad      & 0.10  & 10.70 & 7.05   & 4.14  & 0.00  \\
+    }\mydata2
