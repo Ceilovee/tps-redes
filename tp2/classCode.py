@@ -18,8 +18,10 @@ def calculate_rtt_info(ttl=25, ip=0):
     for i in range(burst_size):
         # Si no me pasaron una IP, calculo el RTT promedio para el TTL dado, y viceversa.
         if ip == 0:
+            # Usamos la IP con la que inicializamos el programa
             probe = IP(dst=sys.argv[1], ttl=ttl) / ICMP()
-        else:    
+        else:
+            # Usamos la IP de entrada de la función
             probe = IP(dst=ip, ttl=ttl) / ICMP()
         t_i = time()
         ans = sr1(probe, verbose=False, timeout=5)
