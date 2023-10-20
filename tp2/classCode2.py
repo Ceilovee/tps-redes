@@ -5,13 +5,20 @@ from time import *
 import numpy as np
 
 # Cantidad de paquetes a enviar para calcular el RTT promedio
-burst_size = 30
 responses = {}
+burst_size = 1
+last_mean_rtt = 0
+
+# List of IP addresses to trace
+ip_addresses = []
+
+# List of labels for connections
+connection_labels = []
 
 # Traceroute con TTLs incrementales
 for ttl in range(1, 25):
 
-    ip_set = set()
+    ip_set   = set()
     rtt_list = np.empty(burst_size, dtype=float)
 
     for i in range(0, burst_size): # Por cada ttl, hago 30 muestreos
@@ -34,14 +41,97 @@ for ttl in range(1, 25):
             responses[ttl].append((ans.src, rtt))
 
     # Ya corrí 30 veces para el mismo ttl
-    
-    # RTT: {responses[ttl]}
+
+
+
     if ttl in responses:
+        
+        most_common_ip = max(set(ip_set), key=list(ip_set).count)
+        mean_rtt       = np.mean(rtt_list[rtt_list > 0])
+        
         print(f"""TTL: {ttl}
-            IP Mas Comun: {max(set(ip_set), key=list(ip_set).count)}
+            IP Mas Comun:    {most_common_ip}
             IPs encontradas: {ip_set}
-            RTT Promedio: {np.mean(rtt_list[rtt_list > 0])}
+            RTT Promedio:    {mean_rtt}
+            Tiempo de hop:   {mean_rtt - last_mean_rtt}
             """)
+
+        last_mean_rtt = mean_rtt
+        ip_addresses.append(most_common_ip)
+        connection_labels.append("RTT: " + str(mean_rtt))
 
     if ans is not None and ans.src == sys.argv[1]:
         break
+
+
+# Hardcodeamos la dire de Rosen
+ip_addresses[0] = "181.2.54.74"
+
+import folium
+import requests
+
+# Create a map centered at a specific location
+m = folium.Map(location=[0, 0], zoom_start=2)  # Adjust the coordinates and zoom level as needed
+
+# Create a feature group for the traced IP addresses
+fg = folium.FeatureGroup(name="Traced IP Addresses")
+
+# Function to geolocate an IP address using ipinfo.io
+def geolocate_ip(ip_address):
+    url = f"https://ipinfo.io/{ip_address}/json"
+    response = requests.get(url)
+    data = response.json()
+    return data
+
+# List to store coordinates of traced IP addresses
+coordinates = []
+
+for ip_address in ip_addresses:
+
+    # Get geolocation information for the IP address
+    location_data = geolocate_ip(ip_address)
+
+    # Extract the latitude and longitude from the response
+    latitude, longitude = location_data.get("loc").split(",")
+    latitude  = float(latitude)
+    longitude = float(longitude)
+
+    # Add a marker for the IP address
+    folium.Marker(
+        location=[latitude, longitude],
+        popup=f"IP: {ip_address}\nLocation: Lat {latitude}, Lon {longitude}",
+    ).add_to(fg)
+
+    # Append coordinates to the list
+    coordinates.append([latitude, longitude])
+
+# Add the feature group to the map
+m.add_child(fg)
+
+# Create an arrowhead line connecting the traced IP addresses with text labels
+for i in range(len(coordinates) - 1):
+    start_coord = coordinates[i]
+    end_coord = coordinates[i + 1]
+    line = folium.PolyLine(
+        locations=[start_coord, end_coord],
+        color="red",
+        line_cap="arrow",
+        weight=2
+    )
+    line.add_to(m)
+
+    # Calculate the position for the text label
+    label_position = [(start_coord[0] + end_coord[0]) / 2, (start_coord[1] + end_coord[1]) / 2]
+
+    # Create a marker with a text label
+    folium.Marker(
+        location=label_position,
+        icon=folium.DivIcon(html=f'<div style="font-size: 12pt;">{connection_labels[i]}</div>'),
+    ).add_to(m)
+
+# Save the map to an HTML file
+m.save("ip_trace_map.html")
+
+# Open the map in a web browser
+import webbrowser
+webbrowser.open("ip_trace_map.html")
