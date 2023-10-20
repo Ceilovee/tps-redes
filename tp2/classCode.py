@@ -18,10 +18,8 @@ def calculate_rtt_info(ttl=25, ip=0):
     for i in range(burst_size):
         # Si no me pasaron una IP, calculo el RTT promedio para el TTL dado, y viceversa.
         if ip == 0:
-            # Usamos la IP con la que inicializamos el programa
             probe = IP(dst=sys.argv[1], ttl=ttl) / ICMP()
-        else:
-            # Usamos la IP de entrada de la función
+        else:    
             probe = IP(dst=ip, ttl=ttl) / ICMP()
         t_i = time()
         ans = sr1(probe, verbose=False, timeout=5)
@@ -34,13 +32,12 @@ def calculate_rtt_info(ttl=25, ip=0):
     
     # Si la lista no es vacia, calculo el RTT promedio
     if(rtt_list.any()):
-        return np.mean(rtt_list[rtt_list > 0]), max(set(ip_set), key=list(ip_set).count, default=0)
+        return np.mean(rtt_list[rtt_list > 0]), max(set(ip_set), key=list(ip_set).count)
     return 0,0
 
 
 responses = {}
 
-# Traceroute con TTLs incrementales
 for i in range(1):
     print()
     for ttl in range(1, 25):
@@ -63,10 +60,10 @@ for i in range(1):
                 # Y por ultimo, tambien para la ip mas comun
                 mean_rtt_for_most_frequent_ip = calculate_rtt_info(ip=most_frequent_ip)
                 print(f"""TTL: {ttl}
-                    IP Mas Comun: {most_frequent_ip
-}                   RTT: {responses[ttl]}
+                    RTT: {responses[ttl]}
                     RTT Promedio: {mean_rtt_for_ttl}
                     RTT Promedio para la IP actual: {mean_rtt_for_current_path_ip}
+                    IP Mas Comun: {most_frequent_ip}
                     RTT Promedio para la IP mas comun: {mean_rtt_for_most_frequent_ip}
                     """)
 
