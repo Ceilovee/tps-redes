@@ -45,4 +45,3 @@ for ttl in range(1, 25):
 
     if ans is not None and ans.src == sys.argv[1]:
         break
-                
