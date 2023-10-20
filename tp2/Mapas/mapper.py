@@ -45,7 +45,6 @@ connection_labels = [
     "RTT: 100",
     "RTT: 100",
     "RTT: 100",
-    
     # Add more labels for connections
 ]
 
@@ -68,7 +67,7 @@ for ip_address in ip_addresses:
 
     # Extract the latitude and longitude from the response
     latitude, longitude = location_data.get("loc").split(",")
-    latitude = float(latitude)
+    latitude  = float(latitude)
     longitude = float(longitude)
 
     # Add a marker for the IP address
@@ -90,7 +89,7 @@ for i in range(len(coordinates) - 1):
     line = folium.PolyLine(
         locations=[start_coord, end_coord],
         color="red",
-        line_cap="round",
+        line_cap="arrow",
         weight=2
     )
     line.add_to(m)

@@ -63,10 +63,10 @@ for i in range(1):
                 # Y por ultimo, tambien para la ip mas comun
                 mean_rtt_for_most_frequent_ip = calculate_rtt_info(ip=most_frequent_ip)
                 print(f"""TTL: {ttl}
-                    RTT: {responses[ttl]}
+                    IP Mas Comun: {most_frequent_ip
+}                   RTT: {responses[ttl]}
                     RTT Promedio: {mean_rtt_for_ttl}
                     RTT Promedio para la IP actual: {mean_rtt_for_current_path_ip}
-                    IP Mas Comun: {most_frequent_ip}
                     RTT Promedio para la IP mas comun: {mean_rtt_for_most_frequent_ip}
                     """)
 
