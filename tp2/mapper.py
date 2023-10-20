@@ -3,17 +3,20 @@ import sys
 from scapy.all import *
 from time import *
 import numpy as np
+import folium
+import requests
 
-# Cantidad de paquetes a enviar para calcular el RTT promedio
+ip_dst = sys.argv[1]
+
 responses = {}
-burst_size = 1
+burst_size = 30 # Cantidad de paquetes a enviar para calcular el RTT promedio
+
+# Datos para armar el mapa
+ip_addresses      = [] # List of IP addresses to trace
+connection_labels = [] # List of labels for connections
+hop_times         = []
+
 last_mean_rtt = 0
-
-# List of IP addresses to trace
-ip_addresses = []
-
-# List of labels for connections
-connection_labels = []
 
 # Traceroute con TTLs incrementales
 for ttl in range(1, 25):
@@ -23,7 +26,7 @@ for ttl in range(1, 25):
 
     for i in range(0, burst_size): # Por cada ttl, hago 30 muestreos
 
-        probe = IP(dst=sys.argv[1], ttl=ttl) / ICMP()
+        probe = IP(dst=ip_dst, ttl=ttl) / ICMP()
         t_i = time()
         ans = sr1(probe, verbose=False, timeout=0.8)
         t_f = time()
@@ -36,39 +39,35 @@ for ttl in range(1, 25):
             rtt_list[i] = rtt
             ip_set.add(ans.src)
 
-            if ttl not in responses:
-                responses[ttl] = []
-            responses[ttl].append((ans.src, rtt))
-
     # Ya corrí 30 veces para el mismo ttl
-
-
-
-    if ttl in responses:
+    if ans is not None:
         
         most_common_ip = max(set(ip_set), key=list(ip_set).count)
         mean_rtt       = np.mean(rtt_list[rtt_list > 0])
+        hop_time       = mean_rtt - last_mean_rtt
         
         print(f"""TTL: {ttl}
             IP Mas Comun:    {most_common_ip}
             IPs encontradas: {ip_set}
             RTT Promedio:    {mean_rtt}
-            Tiempo de hop:   {mean_rtt - last_mean_rtt}
+            Tiempo de hop:   {hop_time}
             """)
 
         last_mean_rtt = mean_rtt
+
+        # Actualizo los datos para el mapa
         ip_addresses.append(most_common_ip)
         connection_labels.append("RTT: " + str(mean_rtt))
+        hop_times.append(hop_time)
 
     if ans is not None and ans.src == sys.argv[1]:
         break
 
-
 # Hardcodeamos la dire de Rosen
 ip_addresses[0] = "181.2.54.74"
 
-import folium
-import requests
+
+### Creamos mapa ###
 
 # Create a map centered at a specific location
 m = folium.Map(location=[0, 0], zoom_start=2)  # Adjust the coordinates and zoom level as needed
@@ -129,9 +128,11 @@ for i in range(len(coordinates) - 1):
         icon=folium.DivIcon(html=f'<div style="font-size: 12pt;">{connection_labels[i]}</div>'),
     ).add_to(m)
 
+name_file = str(ip_dst) + ".html"
+
 # Save the map to an HTML file
-m.save("ip_trace_map.html")
+m.save(name_file)
 
 # Open the map in a web browser
 import webbrowser
-webbrowser.open("ip_trace_map.html")
+webbrowser.open(name_file)
