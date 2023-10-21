@@ -10,7 +10,7 @@ responses = {}
 burst_size = 1
 last_mean_rtt = 0
 
-ip_dst = sys.argv[1]
+ip_dst = "138.80.162.69"
 
 # Datos para mapear
 ip_addresses = []
@@ -58,7 +58,6 @@ for ttl in range(1, 25):
         hop_times.append(round(mean_rtt - last_mean_rtt, 2))
         last_mean_rtt = mean_rtt
         ip_addresses.append(most_common_ip)
-        connection_labels.append("RTT: " + str(mean_rtt))
 
     if ans is not None and ans.src == ip_dst:
         break
@@ -145,7 +144,7 @@ for i in range(len(coordinates) - 1):
     # Create a marker with a text label
     folium.Marker(
         location=label_position,
-        icon=folium.DivIcon(html=f'<div style="font-size: 12pt;">{connection_labels[i]}</div>'),
+        icon=folium.DivIcon(html=f'<div style="font-size: 12pt;">RTT: {int(hop_times[i])}</div>'),
     ).add_to(m)
 
 # Fetch the GeoJSON data from the URL
