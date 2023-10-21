@@ -187,49 +187,27 @@ webbrowser.open(name_file)
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-### PLOT RTTs
+# Borro la primer entrada de las IPs (siempre es la mia o la de mi router)
 ips = list(most_common_ip_addresses)
 ips.pop(0)
-rtts = hop_times
+most_common_ip_percentages.pop(0)
 
-# Create a bar chart using Seaborn
-sns.set(style="whitegrid")  # Optional, for setting the style
-
-# Create a barplot with Seaborn
-plt.figure(figsize=(10, 6))  
-ax = sns.barplot(x=ips, y=rtts, palette="RdPu") #ESTE O TAB10???
-
-# Add labels and title
-ax.set(xlabel='Direcciones IP Recorridas', ylabel='RTT (ms)')
-ax.set_title('RTT Promeido')
-
-# Rotate x-axis labels for better readability (optional)
+### PLOT RTTs
+rtts = list(hop_times)
+sns.set(style="whitegrid")
+plt.figure(figsize=(10, 6))
+ax1 = sns.barplot(x=ips, y=rtts, palette="RdPu")
+ax1.set(xlabel='Direcciones IP Recorridas', ylabel='RTT (ms)')
+ax1.set_title('RTT Promedio - Plot 1')
 plt.xticks(rotation=45, ha="right")
-
-# Set the lower limit of the y-axis to 0
-ax.set_ylim(bottom=0)
-
-# Display the chart
+ax1.set_ylim(bottom=0)
 plt.show()
 
-### PLOT MOST COMMON IP PERCENTAGE
-
-# Create a bar chart using Seaborn
-sns.set(style="whitegrid")  # Optional, for setting the style
-
-# Create a barplot with Seaborn
-plt.figure(figsize=(10, 6))  
-ax = sns.barplot(x=ips, y=most_common_ip_percentages, palette="RdPu") #ESTE O TAB10???
-
-# Add labels and title
-ax.set(xlabel='Direcciones IP Recorridas', ylabel='RTT (ms)')
-ax.set_title('RTT Promeido')
-
-# Rotate x-axis labels for better readability (optional)
+### PLOT STABILITY
+plt.figure(figsize=(10, 6))
+ax2 = sns.barplot(x=ips, y=most_common_ip_percentages, palette="RdPu")  # You can change the palette
+ax2.set(xlabel='Direcciones IP Recorridas', ylabel='RTT (ms)')
+ax2.set_title('RTT Promedio - Plot 2')
 plt.xticks(rotation=45, ha="right")
-
-# Set the lower limit of the y-axis to 0
-ax.set_ylim(bottom=0)
-
-# Display the chart
+ax2.set_ylim(bottom=0)
 plt.show()
