@@ -1,72 +1,73 @@
-python3 mapper_and_plotter.py 147.8.2.58
+p
+ython3 mapper_and_plotter.py 147.8.2.58
 TTL: 1
             IP Mas Comun:    192.168.1.1
             IPs encontradas: {'192.168.1.1'}
-            RTT Promedio:    48.76525505729344
-            Tiempo de hop:   48.76525505729344
+            RTT Promedio:    47.78260770051376
+            Tiempo de hop:   47.78260770051376
             
 TTL: 2
             IP Mas Comun:    181.88.78.157
             IPs encontradas: {'181.88.78.157'}
-            RTT Promedio:    61.4226500193278
-            Tiempo de hop:   12.65739496203436
+            RTT Promedio:    61.188324292500816
+            Tiempo de hop:   13.405716591987058
             
 TTL: 5
             IP Mas Comun:    181.89.51.39
             IPs encontradas: {'181.89.51.39'}
-            RTT Promedio:    65.50658543904622
-            Tiempo de hop:   4.083935419718422
+            RTT Promedio:    62.43296464284261
+            Tiempo de hop:   1.2446403503417969
             
 TTL: 6
             IP Mas Comun:    195.22.220.56
             IPs encontradas: {'195.22.220.56'}
-            RTT Promedio:    66.58899784088135
-            Tiempo de hop:   1.0824124018351284
+            RTT Promedio:    64.8505687713623
+            Tiempo de hop:   2.4176041285196916
             
 TTL: 7
             IP Mas Comun:    89.221.41.175
             IPs encontradas: {'89.221.41.175'}
-            RTT Promedio:    194.8359251022339
-            Tiempo de hop:   128.24692726135254
+            RTT Promedio:    252.26317246754965
+            Tiempo de hop:   187.41260369618735
             
 TTL: 8
             IP Mas Comun:    89.221.41.195
             IPs encontradas: {'89.221.41.195'}
-            RTT Promedio:    199.2231766382853
-            Tiempo de hop:   4.387251536051423
+            RTT Promedio:    210.7635498046875
+            Tiempo de hop:   -41.49962266286215
             
 TTL: 9
             IP Mas Comun:    63.218.204.62
             IPs encontradas: {'63.218.204.62'}
-            RTT Promedio:    396.81341648101807
-            Tiempo de hop:   197.59023984273276
+            RTT Promedio:    418.6761299769084
+            Tiempo de hop:   207.91258017222088
             
 TTL: 10
             IP Mas Comun:    63.218.205.70
             IPs encontradas: {'63.218.205.70'}
-            RTT Promedio:    407.9501787821452
-            Tiempo de hop:   11.136762301127135
+            RTT Promedio:    415.1672840118408
+            Tiempo de hop:   -3.5088459650675645
             
 TTL: 11
             IP Mas Comun:    209.9.115.33
             IPs encontradas: {'209.9.115.33'}
-            RTT Promedio:    402.94398466746014
-            Tiempo de hop:   -5.006194114685059
+            RTT Promedio:    430.7515064875285
+            Tiempo de hop:   15.584222475687682
             
 TTL: 12
             IP Mas Comun:    209.9.115.38
             IPs encontradas: {'209.9.115.38'}
-            RTT Promedio:    407.1268320083618
-            Tiempo de hop:   4.182847340901674
+            RTT Promedio:    415.766437848409
+            Tiempo de hop:   -14.985068639119504
             
 TTL: 13
             IP Mas Comun:    203.188.117.2
             IPs encontradas: {'203.188.117.2'}
-            RTT Promedio:    409.7319523493449
-            Tiempo de hop:   2.605120340983092
+            RTT Promedio:    427.4978081385295
+            Tiempo de hop:   11.73137029012048
             
 TTL: 14
             IP Mas Comun:    147.8.239.15
             IPs encontradas: {'147.8.239.15'}
-            RTT Promedio:    438.92539342244464
-            Tiempo de hop:   29.193441073099734
+            RTT Promedio:    423.3268976211548
+            Tiempo de hop:   -4.170910517374693
