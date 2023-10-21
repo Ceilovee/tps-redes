@@ -1,0 +1,72 @@
+python3 mapper_and_plotter.py 147.8.2.58
+TTL: 1
+            IP Mas Comun:    192.168.1.1
+            IPs encontradas: {'192.168.1.1'}
+            RTT Promedio:    48.76525505729344
+            Tiempo de hop:   48.76525505729344
+            
+TTL: 2
+            IP Mas Comun:    181.88.78.157
+            IPs encontradas: {'181.88.78.157'}
+            RTT Promedio:    61.4226500193278
+            Tiempo de hop:   12.65739496203436
+            
+TTL: 5
+            IP Mas Comun:    181.89.51.39
+            IPs encontradas: {'181.89.51.39'}
+            RTT Promedio:    65.50658543904622
+            Tiempo de hop:   4.083935419718422
+            
+TTL: 6
+            IP Mas Comun:    195.22.220.56
+            IPs encontradas: {'195.22.220.56'}
+            RTT Promedio:    66.58899784088135
+            Tiempo de hop:   1.0824124018351284
+            
+TTL: 7
+            IP Mas Comun:    89.221.41.175
+            IPs encontradas: {'89.221.41.175'}
+            RTT Promedio:    194.8359251022339
+            Tiempo de hop:   128.24692726135254
+            
+TTL: 8
+            IP Mas Comun:    89.221.41.195
+            IPs encontradas: {'89.221.41.195'}
+            RTT Promedio:    199.2231766382853
+            Tiempo de hop:   4.387251536051423
+            
+TTL: 9
+            IP Mas Comun:    63.218.204.62
+            IPs encontradas: {'63.218.204.62'}
+            RTT Promedio:    396.81341648101807
+            Tiempo de hop:   197.59023984273276
+            
+TTL: 10
+            IP Mas Comun:    63.218.205.70
+            IPs encontradas: {'63.218.205.70'}
+            RTT Promedio:    407.9501787821452
+            Tiempo de hop:   11.136762301127135
+            
+TTL: 11
+            IP Mas Comun:    209.9.115.33
+            IPs encontradas: {'209.9.115.33'}
+            RTT Promedio:    402.94398466746014
+            Tiempo de hop:   -5.006194114685059
+            
+TTL: 12
+            IP Mas Comun:    209.9.115.38
+            IPs encontradas: {'209.9.115.38'}
+            RTT Promedio:    407.1268320083618
+            Tiempo de hop:   4.182847340901674
+            
+TTL: 13
+            IP Mas Comun:    203.188.117.2
+            IPs encontradas: {'203.188.117.2'}
+            RTT Promedio:    409.7319523493449
+            Tiempo de hop:   2.605120340983092
+            
+TTL: 14
+            IP Mas Comun:    147.8.239.15
+            IPs encontradas: {'147.8.239.15'}
+            RTT Promedio:    438.92539342244464
+            Tiempo de hop:   29.193441073099734

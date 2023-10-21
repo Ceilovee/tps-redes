@@ -1,0 +1,48 @@
+ python3 mapper_and_plotter.py 178.154.244.120
+TTL: 1
+            IP Mas Comun:    192.168.1.1
+            IPs encontradas: {'192.168.1.1'}
+            RTT Promedio:    47.54524645598038
+            Tiempo de hop:   47.54524645598038
+            
+TTL: 2
+            IP Mas Comun:    181.88.78.157
+            IPs encontradas: {'181.88.78.157'}
+            RTT Promedio:    61.72227064768473
+            Tiempo de hop:   14.177024191704348
+            
+TTL: 5
+            IP Mas Comun:    181.96.113.234
+            IPs encontradas: {'181.96.113.234'}
+            RTT Promedio:    80.44461409250896
+            Tiempo de hop:   18.722343444824226
+            
+TTL: 6
+            IP Mas Comun:    195.22.220.56
+            IPs encontradas: {'195.22.220.56'}
+            RTT Promedio:    63.02473545074463
+            Tiempo de hop:   -17.419878641764328
+            
+TTL: 7
+            IP Mas Comun:    195.22.220.63
+            IPs encontradas: {'195.22.220.63'}
+            RTT Promedio:    60.80353260040283
+            Tiempo de hop:   -2.221202850341797
+            
+TTL: 8
+            IP Mas Comun:    200.189.213.22
+            IPs encontradas: {'200.189.213.22'}
+            RTT Promedio:    87.27290630340576
+            Tiempo de hop:   26.46937370300293
+            
+TTL: 9
+            IP Mas Comun:    8.243.47.214
+            IPs encontradas: {'8.243.47.214'}
+            RTT Promedio:    86.37785116831462
+            Tiempo de hop:   -0.8950551350911411
+            
+TTL: 19
+            IP Mas Comun:    130.193.63.246
+            IPs encontradas: {'130.193.63.246'}
+            RTT Promedio:    325.68864822387695
+            Tiempo de hop:   239.31079705556232
