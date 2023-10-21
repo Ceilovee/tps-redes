@@ -11,7 +11,7 @@ responses = {}
 burst_size = 30
 last_mean_rtt = 0
 
-ip_dst = sys.argv[1]
+ip_dst = "200.7.141.8"
 
 # Datos para mapear
 most_common_ip_addresses = []
@@ -80,6 +80,7 @@ import requests
 import json
 import pycountry
 import webbrowser
+from geopy.distance import geodesic
 
 # Create a map centered at a specific location
 m = folium.Map(location=[0, 0], zoom_start=2)  # Adjust the coordinates and zoom level as needed
@@ -114,7 +115,7 @@ for ip_address in most_common_ip_addresses:
 
     # Add the country to the dictionary with blue color
     countries_with_markers[country] = 'Blue'
-
+    
     # Add a marker for the IP address
     folium.Marker(
         location=[latitude, longitude],
@@ -141,15 +142,19 @@ for i in range(len(coordinates) - 1):
         weight=2
     )
     line.add_to(m)
-
-    # Calculate the position for the text label
-    label_position = [(start_coord[0] + end_coord[0]) / 2, (start_coord[1] + end_coord[1]) / 2]
-
-    # Create a marker with a text label
-    folium.Marker(
-        location=label_position,
-        icon=folium.DivIcon(html=f'<div style="font-size: 12pt;">RTT: {int(hop_times[i])}</div>'),
-    ).add_to(m)
+    
+    # AJUSTAR TRESHOLD PARA ESCONDER LABELS
+    distance_threshold = 100  # Adjust this threshold as needed (in kilometers)    
+    distance = geodesic(start_coord, end_coord).kilometers    
+    if distance > distance_threshold:
+        # Calculate the position for the text label
+        label_position = [(start_coord[0] + end_coord[0]) / 2, (start_coord[1] + end_coord[1]) / 2]
+    
+        # Create a marker with a text label
+        folium.Marker(
+            location=label_position,
+            icon=folium.DivIcon(html=f'<div style="font-size: 12pt;">RTT: {int(hop_times[i])}</div>'),
+        ).add_to(m)
 
 # Fetch the GeoJSON data from the URL
 url = "https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/world-countries.json"
@@ -198,7 +203,7 @@ sns.set(style="whitegrid")
 plt.figure(figsize=(10, 6))
 ax1 = sns.barplot(x=ips, y=rtts, palette="RdPu")
 ax1.set(xlabel='Direcciones IP Recorridas', ylabel='RTT (ms)')
-ax1.set_title('RTT Promedio - Plot 1')
+ax1.set_title('RTT Promedio')
 plt.xticks(rotation=45, ha="right")
 ax1.set_ylim(bottom=0)
 plt.show()
@@ -206,8 +211,8 @@ plt.show()
 ### PLOT STABILITY
 plt.figure(figsize=(10, 6))
 ax2 = sns.barplot(x=ips, y=most_common_ip_percentages, palette="RdPu")  # You can change the palette
-ax2.set(xlabel='Direcciones IP Recorridas', ylabel='RTT (ms)')
-ax2.set_title('RTT Promedio - Plot 2')
+ax2.set(xlabel='Direcciones IP Recorridas', ylabel='Porcentaje de Aparicion')
+ax2.set_title('Estabilidad de la Red')
 plt.xticks(rotation=45, ha="right")
 ax2.set_ylim(bottom=0)
 plt.show()
