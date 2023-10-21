@@ -4,6 +4,7 @@ from scapy.all import *
 from time import *
 import numpy as np
 import pandas as pd
+from collections import Counter
 
 # Cantidad de paquetes a enviar para calcular el RTT promedio
 responses = {}
@@ -13,14 +14,15 @@ last_mean_rtt = 0
 ip_dst = "138.80.162.69"
 
 # Datos para mapear
-ip_addresses = []
+most_common_ip_addresses = []
+most_common_ip_percentages = []
 connection_labels = []
 hop_times = []
 
 # Traceroute con TTLs incrementales
 for ttl in range(1, 25):
 
-    ip_set   = set()
+    ip_path_list = list()
     rtt_list = np.empty(burst_size, dtype=float)
 
     for i in range(0, burst_size): # Por cada ttl, hago 30 muestreos
@@ -36,7 +38,7 @@ for ttl in range(1, 25):
 
             rtt = (t_f - t_i) * 1000
             rtt_list[i] = rtt
-            ip_set.add(ans.src)
+            ip_path_list.append(ans.src)
 
             if ttl not in responses:
                 responses[ttl] = []
@@ -45,26 +47,28 @@ for ttl in range(1, 25):
     # Ya corrimos 30 veces para el mismo ttl
     if ttl in responses:
         
-        most_common_ip = max(set(ip_set), key=list(ip_set).count)
+        # Cuento la IP mas comun y cuantas veces aparecio
+        most_common_ip, most_common_ip_count = Counter(ip_path_list).most_common(1)[0]
+        most_common_ip_percentages.append(most_common_ip_count / len(ip_path_list))
         mean_rtt       = np.mean(rtt_list[rtt_list > 0])
         
         print(f"""TTL: {ttl}
             IP Mas Comun:    {most_common_ip}
-            IPs encontradas: {ip_set}
+            IPs encontradas: {set(ip_path_list)}
             RTT Promedio:    {mean_rtt}
             Tiempo de hop:   {mean_rtt - last_mean_rtt}
             """)
         
         hop_times.append(round(mean_rtt - last_mean_rtt, 2))
         last_mean_rtt = mean_rtt
-        ip_addresses.append(most_common_ip)
-
+        most_common_ip_addresses.append(most_common_ip)
+        
     if ans is not None and ans.src == ip_dst:
         break
 
 
 # Hardcodeamos la dire de Rosen
-ip_addresses[0] = "186.139.87.16"
+most_common_ip_addresses[0] = "186.139.87.16"
 
 # El primer hop_time es 0
 hop_times.pop(0)
@@ -96,7 +100,7 @@ coordinates = []
 # Dictionary to track countries with markers
 countries_with_markers = {}
 
-for ip_address in ip_addresses:
+for ip_address in most_common_ip_addresses:
     # Get geolocation information for the IP address
     location_data = geolocate_ip(ip_address)
 
@@ -183,7 +187,8 @@ webbrowser.open(name_file)
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-ips = list(ip_addresses)
+### PLOT RTTs
+ips = list(most_common_ip_addresses)
 ips.pop(0)
 rtts = hop_times
 
@@ -195,8 +200,30 @@ plt.figure(figsize=(10, 6))
 ax = sns.barplot(x=ips, y=rtts, palette="RdPu") #ESTE O TAB10???
 
 # Add labels and title
-ax.set(xlabel='IP Address', ylabel='RTT (ms)')
-ax.set_title('RTT for Each IP Address')
+ax.set(xlabel='Direcciones IP Recorridas', ylabel='RTT (ms)')
+ax.set_title('RTT Promeido')
+
+# Rotate x-axis labels for better readability (optional)
+plt.xticks(rotation=45, ha="right")
+
+# Set the lower limit of the y-axis to 0
+ax.set_ylim(bottom=0)
+
+# Display the chart
+plt.show()
+
+### PLOT MOST COMMON IP PERCENTAGE
+
+# Create a bar chart using Seaborn
+sns.set(style="whitegrid")  # Optional, for setting the style
+
+# Create a barplot with Seaborn
+plt.figure(figsize=(10, 6))  
+ax = sns.barplot(x=ips, y=most_common_ip_percentages, palette="RdPu") #ESTE O TAB10???
+
+# Add labels and title
+ax.set(xlabel='Direcciones IP Recorridas', ylabel='RTT (ms)')
+ax.set_title('RTT Promeido')
 
 # Rotate x-axis labels for better readability (optional)
 plt.xticks(rotation=45, ha="right")
