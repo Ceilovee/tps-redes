@@ -8,10 +8,10 @@ from collections import Counter
 
 # Cantidad de paquetes a enviar para calcular el RTT promedio
 responses = {}
-burst_size = 1
+burst_size = 30
 last_mean_rtt = 0
 
-ip_dst = "138.80.162.69"
+ip_dst = sys.argv[1]
 
 # Datos para mapear
 most_common_ip_addresses = []
